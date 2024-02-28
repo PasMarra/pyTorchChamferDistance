@@ -1,4 +1,3 @@
-//#include <ATen/ATen.h>
 #include "stdio.h"
 
 #include <cuda.h>

@@ -1,6 +1,3 @@
-//#ifndef CHAMFER_DISTANCE_HPP
-//#define CHAMFER_DISTANCE_HPP
-//
 #include <torch/torch.h>
 
 // CUDA forward declarations
@@ -75,5 +72,3 @@ void chamfer_distance_backward(
     at::Tensor graddist2, 
     at::Tensor idx1, 
     at::Tensor idx2);
-
-//#endif
