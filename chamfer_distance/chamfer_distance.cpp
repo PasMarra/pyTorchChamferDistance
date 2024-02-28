@@ -1,6 +1,10 @@
+#ifndef CHAMFER_DISTANCE_CPP
+#define CHAMFER_DISTANCE_CPP
+
 #include <torch/torch.h>
 
 // CUDA forward declarations
+
 void ChamferDistanceKernelLauncher(
     const int b, const int n,
     const float* xyz,
@@ -10,6 +14,7 @@ void ChamferDistanceKernelLauncher(
     int* result_i,
     float* result2,
     int* result2_i);
+
 
 void ChamferDistanceGradKernelLauncher(
     const int b, const int n,
@@ -24,7 +29,7 @@ void ChamferDistanceGradKernelLauncher(
     float* grad_xyz2);
 
 
-void chamfer_distance_forward_cuda(
+inline void chamfer_distance_forward_cuda(
     const at::Tensor xyz1, 
     const at::Tensor xyz2, 
     const at::Tensor dist1, 
@@ -38,7 +43,8 @@ void chamfer_distance_forward_cuda(
                                             dist2.data<float>(), idx2.data<int>());
 }
 
-void chamfer_distance_backward_cuda(
+
+inline void chamfer_distance_backward_cuda(
     const at::Tensor xyz1,
     const at::Tensor xyz2, 
     at::Tensor gradxyz1, 
@@ -56,7 +62,7 @@ void chamfer_distance_backward_cuda(
 }
 
 
-void nnsearch(
+inline void nnsearch(
     const int b, const int n, const int m,
     const float* xyz1,
     const float* xyz2,
@@ -87,7 +93,7 @@ void nnsearch(
 }
 
 
-void chamfer_distance_forward(
+inline void chamfer_distance_forward(
     const at::Tensor xyz1, 
     const at::Tensor xyz2, 
     const at::Tensor dist1, 
@@ -111,7 +117,7 @@ void chamfer_distance_forward(
 }
 
 
-void chamfer_distance_backward(
+inline void chamfer_distance_backward(
     const at::Tensor xyz1, 
     const at::Tensor xyz2, 
     at::Tensor gradxyz1, 
@@ -177,9 +183,12 @@ void chamfer_distance_backward(
 }
 
 
-PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
-    m.def("forward", &chamfer_distance_forward, "ChamferDistance forward");
-    m.def("forward_cuda", &chamfer_distance_forward_cuda, "ChamferDistance forward (CUDA)");
-    m.def("backward", &chamfer_distance_backward, "ChamferDistance backward");
-    m.def("backward_cuda", &chamfer_distance_backward_cuda, "ChamferDistance backward (CUDA)");
-}
+//PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
+//    m.def("forward", &chamfer_distance_forward, "ChamferDistance forward");
+//    m.def("forward_cuda", &chamfer_distance_forward_cuda, "ChamferDistance forward (CUDA)");
+//    m.def("backward", &chamfer_distance_backward, "ChamferDistance backward");
+//    m.def("backward_cuda", &chamfer_distance_backward_cuda, "ChamferDistance backward (CUDA)");
+//}
+
+
+#endif
