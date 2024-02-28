@@ -4,6 +4,8 @@
 #include <cuda.h>
 #include <cuda_runtime.h>
 
+#include <chamfer_distance/chamfer_distance.h>
+
 __global__ 
 void ChamferDistanceKernel(
 	int b,
